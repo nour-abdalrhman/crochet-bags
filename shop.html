@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Crochet Bags</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff5f0 100%);
+            min-height: 100vh;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #e91e63, #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e91e63;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            padding: 0.8rem 2rem;
+            background: white;
+            color: #e91e63;
+            border: 2px solid #e91e63;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #e91e63;
+            color: white;
+        }
+
+        /* Hero */
+        .shop-hero {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .shop-hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #e91e63, #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .shop-hero p {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Filters & Sort Bar */
+        .control-bar {
+            max-width: 1400px;
+            margin: 0 auto 3rem;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            border: 2px solid #f0f0f0;
+            border-radius: 50px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: #e91e63;
+            color: #e91e63;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #e91e63, #ff6b9d);
+            color: white;
+            border-color: transparent;
+        }
+
+        .sort-dropdown {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            border: 2px solid #f0f0f0;
+            border-radius: 50px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .sort-dropdown:hover {
+            border-color: #e91e63;
+        }
+
+        /* Products Grid */
+        .products-container {
+            max-width: 1400px;
+            margin: 0 auto 5rem;
+            padding: 0 2rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            animation: fadeIn 0.6s ease backwards;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+        .product-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 50px rgba(233, 30, 99, 0.2);
+        }
+
+        .product-image {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #e91e63, #ff6b9d);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .product-badge.new {
+            background: #4caf50;
+        }
+
+        .quick-view {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            padding: 0.7rem 1.5rem;
+            background: white;
+            border-radius: 50px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover .quick-view {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 0.8rem;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #ffc107;
+            font-size: 0.9rem;
+        }
+
+        .rating-count {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .price-old {
+            color: #999;
+            text-decoration: line-through;
+            font-size: 1rem;
+        }
+
+        .price-new {
+            color: #e91e63;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, #e91e63, #ff6b9d);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .add-to-cart-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .add-to-cart-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .add-to-cart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(233, 30, 99, 0.4);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 5rem 2rem;
+            display: none;
+        }
+
+        .no-results.show {
+            display: block;
+        }
+
+        .no-results h3 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .no-results p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 968px) {
+            .shop-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .control-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filters {
+                justify-content: center;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .product-image {
+                height: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🧶 Crochet Bags</div>
+            <div class="nav-right">
+                <a href="cart.html" class="cart-icon">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <a href="index.html" class="back-btn">← Back to Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="shop-hero">
+        <h1>Our Collection</h1>
+        <p>Discover handcrafted crochet bags made with love and care</p>
+    </section>
+
+    <section class="control-bar">
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All Products</button>
+            <button class="filter-btn" data-filter="sale">On Sale</button>
+            <button class="filter-btn" data-filter="new">New Arrivals</button>
+            <button class="filter-btn" data-filter="bestseller">Best Sellers</button>
+        </div>
+
+        <select class="sort-dropdown" id="sortSelect">
+            <option value="default">Sort By: Default</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name">Name: A to Z</option>
+        </select>
+    </section>
+
+    <section class="products-container">
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be loaded here -->
+        </div>
+        <div class="no-results" id="noResults">
+            <h3>No products found</h3>
+            <p>Try adjusting your filters</p>
+        </div>
+    </section>
+
+    <script>
+        
+        const products = [
+            {
+                id: 1,
+                name: "Luna - Luxury Crochet Bag",
+                price: 350,
+                oldPrice: 500,
+                image: "https://i.pinimg.com/736x/ea/d5/a1/ead5a1a8332afff8a805e9738618d8c3.jpg",
+                rating: 5,
+                reviews: 127,
+                badge: "30% OFF",
+                category: "sale bestseller"
+            },
+            {
+                id: 2,
+                name: "Classic Crochet Bag",
+                price: 280,
+                oldPrice: 400,
+                image: "https://i.pinimg.com/736x/d3/d9/08/d3d90872b1ae7a4e38bd0bbf299f9ca8.jpg",
+                rating: 5,
+                reviews: 45,
+                badge: "30% OFF",
+                category: "sale"
+            },
+            {
+                id: 3,
+                name: "Modern Crochet Bag",
+                price: 315,
+                oldPrice: 450,
+                image: "https://i.pinimg.com/736x/76/7b/c8/767bc8beb9d09ab4aee9599a11a6d2d9.jpg",
+                rating: 5,
+                reviews: 38,
+                badge: "30% OFF",
+                category: "sale new"
+            },
+            {
+                id: 4,
+                name: "Elegant Crochet Bag",
+                price: 500,
+                oldPrice: null,
+                image: "https://i.pinimg.com/736x/da/50/3f/da503f05eb0af168d9774553a712a47b.jpg",
+                rating: 5,
+                reviews: 52,
+                badge: "NEW",
+                badgeClass: "new",
+                category: "new bestseller"
+            },
+                  {
+                id: 1,
+                name: "Luna - Luxury Crochet Bag",
+                price: 350,
+                oldPrice: 500,
+                image: "https://i.pinimg.com/736x/4d/94/47/4d9447da3af4f0aa386e0de06c0cef5c.jpg",
+                rating: 5,
+                reviews: 127,
+                badge: "30% OFF",
+                category: "sale bestseller"
+            },
+            {
+                id: 2,
+                name: "Classic Crochet Bag",
+                price: 280,
+                oldPrice: 400,
+                image: "https://i.pinimg.com/736x/78/02/2a/78022aec297f28467b82315f3256a210.jpg",
+                rating: 5,
+                reviews: 45,
+                badge: "30% OFF",
+                category: "sale"
+            },
+            {
+                id: 3,
+                name: "Modern Crochet Bag",
+                price: 315,
+                oldPrice: 450,
+                image: "https://i.pinimg.com/736x/da/1d/d8/da1dd8861e4a72f4e3432e90d5201c29.jpg",
+                rating: 5,
+                reviews: 38,
+                badge: "30% OFF",
+                category: "sale new"
+            },
+            {
+                id: 4,
+                name: "Elegant Crochet Bag",
+                price: 500,
+                oldPrice: null,
+                image: "https://i.pinimg.com/736x/e7/41/23/e74123319201d3a81386428e16a9f8f5.jpg",
+                rating: 5,
+                reviews: 52,
+                badge: "NEW",
+                badgeClass: "new",
+                category: "new bestseller"
+            },
+     
+        ];
+
+        let currentFilter = 'all';
+        let currentSort = 'default';
+
+       
+        function init() {
+            updateCartCount();
+            renderProducts();
+            setupFilters();
+            setupSort();
+        }
+
+      
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('crochetCart') || '[]');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+       
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const noResults = document.getElementById('noResults');
+            
+            let filteredProducts = products;
+
+     
+            if (currentFilter !== 'all') {
+                filteredProducts = products.filter(p => p.category.includes(currentFilter));
+            }
+
+          
+            if (currentSort === 'price-low') {
+                filteredProducts.sort((a, b) => a.price - b.price);
+            } else if (currentSort === 'price-high') {
+                filteredProducts.sort((a, b) => b.price - a.price);
+            } else if (currentSort === 'name') {
+                filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+            }
+
+           
+            if (filteredProducts.length === 0) {
+                grid.style.display = 'none';
+                noResults.classList.add('show');
+                return;
+            }
+
+            grid.style.display = 'grid';
+            noResults.classList.remove('show');
+
+         
+            grid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card" data-id="${product.id}">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                        <div class="product-badge ${product.badgeClass || ''}">${product.badge}</div>
+                        <button class="quick-view" onclick="viewProduct(${product.id})">Quick View</button>
+                    </div>
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <div class="product-rating">
+                            <span class="stars">${'⭐'.repeat(product.rating)}</span>
+                            <span class="rating-count">(${product.reviews})</span>
+                        </div>
+                        <div class="product-price">
+                            ${product.oldPrice ? `<span class="price-old">${product.oldPrice} EGP</span>` : ''}
+                            <span class="price-new">${product.price} EGP</span>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                            Add to Cart 🛒
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+     
+        function setupFilters() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.filter;
+                    renderProducts();
+                });
+            });
+        }
+
+   
+        function setupSort() {
+            document.getElementById('sortSelect').addEventListener('change', (e) => {
+                currentSort = e.target.value;
+                renderProducts();
+            });
+        }
+
+      
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            let cart = JSON.parse(localStorage.getItem('crochetCart') || '[]');
+            
+            const existingProduct = cart.find(item => item.name === product.name);
+            
+            if (existingProduct) {
+                existingProduct.quantity++;
+            } else {
+                cart.push({
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('crochetCart', JSON.stringify(cart));
+            updateCartCount();
+            
+           
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✓ Added!';
+            btn.style.background = '#4caf50';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = 'linear-gradient(135deg, #e91e63, #ff6b9d)';
+            }, 1500);
+        }
+
+       
+        function viewProduct(productId) {
+            window.location.href = 'product-landing.html';
+        }
+
+      
+        init();
+    </script>
+</body>
+</html>

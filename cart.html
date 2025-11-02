@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Crochet Bags</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff5f0 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .cart-container {
+            max-width: 1200px;
+            margin-left: 400px;
+        }
+
+        .cart-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .cart-header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            margin-right: 400px;
+        }
+
+        .cart-header p {
+            color: #666;
+            font-size: 1.1rem;
+              margin-right: 400px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: #e91e63;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .cart-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+        }
+
+        .cart-items {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 120px 1fr auto;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            border-bottom: 2px solid #f5f5f5;
+            align-items: center;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-details h3 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-details p {
+            color: #666;
+            margin-bottom: 0.8rem;
+        }
+
+        .item-price {
+            font-size: 1.3rem;
+            color: #e91e63;
+            font-weight: bold;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .quantity-btn {
+            width: 35px;
+            height: 35px;
+            border: 2px solid #e91e63;
+            background: white;
+            color: #e91e63;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #e91e63;
+            color: white;
+        }
+
+        .quantity-display {
+            font-size: 1.1rem;
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .item-actions {
+            text-align: right;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #e91e63;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            transform: scale(1.2);
+            color: #c2185b;
+        }
+
+        .item-total {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-top: 0.5rem;
+        }
+
+        .cart-summary {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .cart-summary h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f5f5f5;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .summary-row span:first-child {
+            color: #666;
+        }
+
+        .summary-row span:last-child {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .discount-row {
+            color: #4caf50 !important;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #f5f5f5;
+        }
+
+        .summary-total span:last-child {
+            color: #e91e63;
+        }
+
+        .promo-code {
+            margin: 1.5rem 0;
+        }
+
+        .promo-code input {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .promo-code input:focus {
+            outline: none;
+            border-color: #e91e63;
+        }
+
+        .apply-promo-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: white;
+            color: #e91e63;
+            border: 2px solid #e91e63;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .apply-promo-btn:hover {
+            background: #e91e63;
+            color: white;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #e91e63, #ff6b9d);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(233, 30, 99, 0.4);
+        }
+
+        .continue-shopping {
+            width: 100%;
+            padding: 1rem;
+            background: white;
+            color: #e91e63;
+            border: 2px solid #e91e63;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .continue-shopping:hover {
+            background: #ffeef8;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-cart-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-cart h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .empty-cart p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 968px) {
+            .cart-content {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-summary {
+                position: static;
+            }
+
+            .cart-item {
+                grid-template-columns: 100px 1fr;
+                gap: 1rem;
+            }
+
+            .item-actions {
+                grid-column: 1 / -1;
+                text-align: left;
+                margin-top: 1rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 568px) {
+            body {
+                padding: 1rem;
+            }
+
+            .cart-item {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .item-image {
+                margin: 0 auto;
+            }
+
+            .quantity-controls {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-container">
+        <a href="index.html" class="back-link">← Back to Shop</a>
+        
+        <div class="cart-header">
+            <h1> Shopping Cart</h1>
+            <p>Review your items before checkout</p>
+        </div>
+
+        <div class="cart-content" id="cartContent">
+            <div class="cart-items" id="cartItems">
+             
+            </div>
+
+            <div class="cart-summary">
+                <h2>Order Summary</h2>
+                
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">0 EGP</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span id="shipping">50 EGP</span>
+                </div>
+                
+                <div class="summary-row discount-row" id="discountRow" style="display: none;">
+                    <span>Discount:</span>
+                    <span id="discount">-0 EGP</span>
+                </div>
+
+                <div class="promo-code">
+                    <input type="text" id="promoInput" placeholder="Enter promo code">
+                    <button class="apply-promo-btn" id="applyPromo">Apply Code</button>
+                </div>
+                
+                <div class="summary-total">
+                    <span>Total:</span>
+                    <span id="total">0 EGP</span>
+                </div>
+
+                <button class="checkout-btn">Proceed to Checkout</button>
+                <a href="index.html" class="continue-shopping">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+     
+        function getCart() {
+            const cart = localStorage.getItem('crochetCart');
+            return cart ? JSON.parse(cart) : [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('crochetCart', JSON.stringify(cart));
+        }
+
+        let shippingCost = 50;
+        let discountAmount = 0;
+
+        function renderCart() {
+            const cart = getCart();
+            const cartItemsContainer = document.getElementById('cartItems');
+            
+            if (cart.length === 0) {
+                showEmptyCart();
+                return;
+            }
+
+            cartItemsContainer.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.dataset.price = item.price;
+                cartItem.dataset.index = index;
+
+                cartItem.innerHTML = `
+                    <div class="item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="item-details">
+                        <h3>${item.name}</h3>
+                        <p>Handmade, Premium Quality</p>
+                        <div class="item-price">${item.price} EGP</div>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn decrease">-</button>
+                            <span class="quantity-display">${item.quantity}</span>
+                            <button class="quantity-btn increase">+</button>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="remove-btn">🗑️</button>
+                        <div class="item-total">${item.price * item.quantity} EGP</div>
+                    </div>
+                `;
+
+                cartItemsContainer.appendChild(cartItem);
+            });
+
+            attachEventListeners();
+            updateCart();
+        }
+
+        function attachEventListeners() {
+            const cartItems = document.querySelectorAll('.cart-item');
+
+            cartItems.forEach(item => {
+                const decreaseBtn = item.querySelector('.decrease');
+                const increaseBtn = item.querySelector('.increase');
+                const removeBtn = item.querySelector('.remove-btn');
+                const index = parseInt(item.dataset.index);
+
+                decreaseBtn.addEventListener('click', () => {
+                    let cart = getCart();
+                    if (cart[index].quantity > 1) {
+                        cart[index].quantity--;
+                        saveCart(cart);
+                        renderCart();
+                    }
+                });
+
+                increaseBtn.addEventListener('click', () => {
+                    let cart = getCart();
+                    cart[index].quantity++;
+                    saveCart(cart);
+                    renderCart();
+                });
+
+                removeBtn.addEventListener('click', () => {
+                    let cart = getCart();
+                    cart.splice(index, 1);
+                    saveCart(cart);
+                    renderCart();
+                });
+            });
+        }
+
+        function updateCart() {
+            const cart = getCart();
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+            });
+
+        
+            if (subtotal >= 500) {
+                shippingCost = 0;
+                document.getElementById('shipping').textContent = 'Free';
+            } else {
+                shippingCost = 50;
+                document.getElementById('shipping').textContent = shippingCost + ' EGP';
+            }
+
+            const total = subtotal + shippingCost - discountAmount;
+
+            document.getElementById('subtotal').textContent = subtotal + ' EGP';
+            document.getElementById('total').textContent = total + ' EGP';
+        }
+
+        function showEmptyCart() {
+            document.getElementById('cartContent').innerHTML = `
+                <div class="empty-cart">
+                    <div class="empty-cart-icon">🛒</div>
+                    <h2>Your cart is empty</h2>
+                    <p>Add some beautiful crochet bags to your cart!</p>
+                    <a href="index.html" class="checkout-btn" style="max-width: 300px; margin: 0 auto;">Start Shopping</a>
+                </div>
+            `;
+        }
+
+        
+        document.getElementById('applyPromo').addEventListener('click', () => {
+            const code = document.getElementById('promoInput').value.trim().toUpperCase();
+            
+            if (code === 'SAVE20') {
+                const subtotalText = document.getElementById('subtotal').textContent;
+                const subtotal = parseInt(subtotalText.replace(/[^0-9]/g, ''));
+                discountAmount = subtotal * 0.2;
+                document.getElementById('discountRow').style.display = 'flex';
+                document.getElementById('discount').textContent = '-' + discountAmount.toFixed(0) + ' EGP';
+                updateCart();
+                document.getElementById('promoInput').value = '';
+                document.getElementById('applyPromo').textContent = '✓ Applied';
+                document.getElementById('applyPromo').style.background = '#4caf50';
+                document.getElementById('applyPromo').style.color = 'white';
+                document.getElementById('applyPromo').style.borderColor = '#4caf50';
+            } else if (code === '') {
+                alert('Please enter a promo code');
+            } else {
+                alert('Invalid promo code');
+            }
+        });
+
+     
+        renderCart();
+    </script>
+</body>
+</html>

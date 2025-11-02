@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luna Bag - Handcrafted Crochet Excellence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff5f0 100%);
+            min-height: 100vh;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #e91e63, #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+        }
+
+        .back-btn {
+            padding: 0.8rem 2rem;
+            background: white;
+            color: #e91e63;
+            border: 2px solid #e91e63;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #e91e63;
+            color: white;
+        }
+
+  
+        .hero {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-images {
+            position: relative;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 600px;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(233, 30, 99, 0.2);
+            position: relative;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .main-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #e91e63, #ff6b9d);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .thumbnail-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 100px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .thumbnail.active {
+            border-color: #e91e63;
+        }
+
+        .thumbnail:hover {
+            border-color: #ff6b9d;
+            transform: translateY(-5px);
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+     
+        .product-info {
+            padding: 2rem 0;
+        }
+
+        .product-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #e91e63, #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stars {
+            color: #ffc107;
+            font-size: 1.5rem;
+        }
+
+        .reviews {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .product-description {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .features-list {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .features-list h3 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: #ffeef8;
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+        }
+
+        .feature-text {
+            color: #555;
+            font-size: 1rem;
+        }
+
+  
+        .price-section {
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.1), rgba(255, 107, 157, 0.1));
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .old-price {
+            font-size: 1.8rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .new-price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #e91e63;
+        }
+
+        .discount-badge {
+            background: #4caf50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+
+        .savings {
+            color: #4caf50;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+ 
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-add-cart {
+            flex: 2;
+            padding: 1.3rem;
+            background: linear-gradient(135deg, #e91e63, #ff6b9d);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(233, 30, 99, 0.3);
+        }
+
+        .btn-add-cart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(233, 30, 99, 0.4);
+        }
+
+        .btn-wishlist {
+            padding: 1.3rem;
+            background: white;
+            color: #e91e63;
+            border: 2px solid #e91e63;
+            border-radius: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-wishlist:hover {
+            background: #ffeef8;
+        }
+
+        .guarantee-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .guarantee-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .guarantee-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .guarantee-icon {
+            color: #4caf50;
+            font-size: 1.2rem;
+        }
+
+        .guarantee-text {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+
+        .details-section {
+            max-width: 1400px;
+            margin: 5rem auto;
+            padding: 0 2rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            color: #e91e63;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(135deg, #e91e63, #ff6b9d);
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content h3 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .tab-content p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .specifications {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            background: #fafafa;
+            border-radius: 10px;
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .spec-value {
+            color: #666;
+        }
+
+  
+        .reviews-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .review-card {
+            padding: 2rem;
+            background: #fafafa;
+            border-radius: 15px;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .reviewer-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #e91e63;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .review-date {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .review-stars {
+            color: #ffc107;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-text {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 968px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .main-image {
+                height: 400px;
+            }
+
+            .product-title {
+                font-size: 2.5rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .specifications {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🧶 Crochet Bags</div>
+            <a href="index.html" class="back-btn">← Back to Shop</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-images">
+            <div class="main-image" id="mainImage">
+                <img src=" https://i.pinimg.com/1200x/67/9e/f4/679ef4faff69446f7483ee18d335f0f0.jpg " alt="Luna Bag">
+                <div class="badge">30% OFF 🔥</div>
+            </div>
+            <div class="thumbnail-gallery">
+                <div class="thumbnail active" onclick="changeImage(this, 'https://i.pinimg.com/1200x/67/9e/f4/679ef4faff69446f7483ee18d335f0f0.jpg')">
+                    <img src="https://i.pinimg.com/1200x/67/9e/f4/679ef4faff69446f7483ee18d335f0f0.jpg" alt="View 1">
+                </div>
+                <div class="thumbnail" onclick="changeImage(this, 'https://i.pinimg.com/1200x/b8/4c/69/b84c690bc559f23b4ed65d98f56eb470.jpg')">
+                    <img src="https://i.pinimg.com/1200x/b8/4c/69/b84c690bc559f23b4ed65d98f56eb470.jpg" alt="View 2">
+                </div>
+                <div class="thumbnail" onclick="changeImage(this, 'https://i.pinimg.com/736x/51/1f/7c/511f7c36beec1225c6b6e6d254d58d97.jpg')">
+                    <img src="https://i.pinimg.com/736x/51/1f/7c/511f7c36beec1225c6b6e6d254d58d97.jpg" alt="View 3">
+                </div>
+            </div>
+        </div>
+
+        <div class="product-info">
+            <h1 class="product-title">Luna - Luxury Crochet Bag</h1>
+            
+            <div class="rating">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <span class="reviews">(127 reviews)</span>
+            </div>
+
+            <p class="product-description">
+                Meet Luna, the epitome of handcrafted elegance. This stunning crochet bag is meticulously crafted from 100% natural cotton threads, featuring an intricate pattern that took our artisans months to perfect. Perfect for both casual outings and formal events, Luna combines timeless beauty with modern functionality.
+            </p>
+
+
+            <div class="price-section">
+                <div class="price-row">
+                    <span class="old-price">500 EGP</span>
+                    <span class="new-price">350 EGP</span>
+                    <span class="discount-badge">SAVE 30%</span>
+                </div>
+                <p class="savings">🎉 You save 150 EGP on this exclusive offer!</p>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-add-cart" onclick="addToCart()">Add to Cart 🛒</button>
+                <button class="btn-wishlist">❤️</button>
+            </div>
+
+            <div class="guarantee-box">
+                <div class="guarantee-item">
+                    <span class="guarantee-icon">✓</span>
+                    <span class="guarantee-text">Free shipping on orders over 500 EGP</span>
+                </div>
+                <div class="guarantee-item">
+                    <span class="guarantee-icon">✓</span>
+                    <span class="guarantee-text">7-day return & exchange policy</span>
+                </div>
+                <div class="guarantee-item">
+                    <span class="guarantee-icon">✓</span>
+                    <span class="guarantee-text">Secure payment & fast delivery</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+    <script>
+        function changeImage(thumbnail, imageSrc) {
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+            thumbnail.classList.add('active');
+            document.querySelector('#mainImage img').src = imageSrc;
+        }
+
+        function showTab(index) {
+            document.querySelectorAll('.tab').forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+            });
+            document.querySelectorAll('.tab-content').forEach((content, i) => {
+                content.classList.toggle('active', i === index);
+            });
+        }
+
+        function addToCart() {
+            const product = {
+                name: 'Luna - Luxury Crochet Bag',
+                price: 350,
+                image: 'https://i.pinimg.com/736x/4f/2a/51/4f2a514c8629da4fd285e73fd4d3775e.jpg',
+                quantity: 1
+            };
+
+            let cart = JSON.parse(localStorage.getItem('crochetCart') || '[]');
+            const existingProduct = cart.find(item => item.name === product.name);
+            
+            if (existingProduct) {
+                existingProduct.quantity++;
+            } else {
+                cart.push(product);
+            }
+            
+            localStorage.setItem('crochetCart', JSON.stringify(cart));
+            
+            const btn = document.querySelector('.btn-add-cart');
+            btn.textContent = '✓ Added to Cart!';
+            btn.style.background = '#4caf50';
+            
+            setTimeout(() => {
+                window.location.href = 'cart.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
